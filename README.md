@@ -41,7 +41,7 @@ MAIL_FROM_NAME="PT.SmartSales Indonesia"
 ## 3. Generate app password di gmail
     1. Buka profile dan klik Kelola akun/Manage your Google Account
     2. Pada search bar cari App passwords/Sandi aplikasi
-    3. Buat app name/nama aplikasi yang anda mau
+    3. Buat App name/Nama aplikasi yang anda mau
     4. Password akan ter generate copy paste password kedalam MAIL_PASSWORD
     5. Hapus spasi dari password nya
 
