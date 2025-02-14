@@ -46,7 +46,7 @@ MAIL_FROM_NAME="PT.SmartSales Indonesia"
     5. Hapus spasi dari password nya
 
 ## 4. Buat database dan migrate
-Buat database baru di mysql dan sesuaikan di .env lalu jalankan:
+Buat database baru dan sesuaikan di .env lalu jalankan:
 ```sh
 php artisan migrate
 ```
