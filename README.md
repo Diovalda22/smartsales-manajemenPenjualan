@@ -24,9 +24,9 @@ Sesuaikan database dan send email di file .env:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=ukk_toko
-DB_USERNAME=root
-DB_PASSWORD=
+DB_DATABASE=nama_database
+DB_USERNAME=username_anda
+DB_PASSWORD=password_anda
 
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.gmail.com
@@ -45,7 +45,13 @@ MAIL_FROM_NAME="PT.SmartSales Indonesia"
     4. Password akan ter generate copy paste password kedalam MAIL_PASSWORD
     5. Hapus spasi dari password nya
 
-## 4. Menjalankan Aplikasi
+## 4. Buat database dan migrate
+Buat database baru di mysql dan sesuaikan di .env lalu jalankan:
+```sh
+php artisan migrate
+```
+
+## 5. Menjalankan Aplikasi
 Jalankan perintah berikut:
 ```sh
 php artisan serve
