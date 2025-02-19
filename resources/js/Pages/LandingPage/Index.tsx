@@ -5,6 +5,7 @@ import CTA from "./Components/CTA";
 import Testimonials from "./Components/Testimonials";
 import Pricing from "./Components/Pricing";
 import FAQ from "./Components/FAQ";
+import VideoPlayer from "./Components/VideoPlayer";
 
 export default function LandingPage() {
     return (
@@ -13,6 +14,7 @@ export default function LandingPage() {
             <main>
                 <Hero />
                 <Features />
+                <VideoPlayer />
                 <Testimonials />
                 <FAQ />
                 <CTA />

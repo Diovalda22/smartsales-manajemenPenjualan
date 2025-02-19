@@ -237,7 +237,7 @@ export default function Index({
                                             {sale.details.map((detail) => (
                                                 <div
                                                     key={detail.product.name}
-                                                    className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-md"
+                                                    className="flex items-center gap-2 bg-gray-100 px-3 py-2 my-2 rounded-md"
                                                 >
                                                     <span className="font-medium text-gray-700">
                                                         {detail.product.name}

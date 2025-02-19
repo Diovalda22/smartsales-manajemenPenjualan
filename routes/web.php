@@ -4,6 +4,7 @@ use App\Exports\TransactionsExport;
 use App\Http\Controllers\CustomersController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductCategoriesController;
+use App\Http\Controllers\ProductImportController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;

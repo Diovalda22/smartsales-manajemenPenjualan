@@ -1,9 +1,16 @@
-import React from "react";
 import { Link } from "@inertiajs/react";
 import { Button } from "@/Components/ui/button";
 import AppLayout from "@/Layouts/AppLayout";
 import { Card, CardContent } from "@/Components/ui/card";
-import { CreditCard, Calendar, User, CheckCircle, XCircle } from "lucide-react";
+import {
+    CreditCard,
+    Calendar,
+    User,
+    CheckCircle,
+    XCircle,
+    FileText,
+} from "lucide-react";
+import jsPDF from "jspdf";
 
 interface Product {
     id: number;
@@ -40,6 +47,58 @@ interface DetailProps {
 }
 
 export default function Detail({ sale }: DetailProps) {
+    const formatRupiah = (angka: number) => {
+        return new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+        }).format(angka);
+    };
+    const exportToPDF = () => {
+        const doc = new jsPDF({ unit: "mm", format: "a6" });
+        doc.setFont("courier");
+        doc.setFontSize(14);
+        doc.text("================================", 5, 10);
+        doc.text("       STRUK PEMBELIAN", 10, 16);
+        doc.text("================================", 5, 22);
+
+        doc.setFontSize(10);
+        doc.text(`ID Transaksi : #${sale.id}`, 10, 30);
+        doc.text(`Nama Pelanggan : ${sale.customer.name}`, 10, 36);
+        doc.text(`Tanggal : ${sale.sales_date}`, 10, 42);
+        doc.text(`Metode Pembayaran : ${sale.payment_method}`, 10, 48);
+        doc.text(`Status Pembayaran : ${sale.payment_status}`, 10, 54);
+
+        let y = 60;
+        doc.text("================================", 10, y);
+        doc.text("Produk", 10, y + 6);
+        doc.text("Qty    Harga      Subtotal", 10, y + 12);
+        doc.text("================================", 10, y + 18);
+        y += 24;
+
+        sale.details.forEach((item) => {
+            doc.text(`${item.product.name}`, 10, y);
+            y += 6;
+            doc.text(
+                `${item.quantity} x ${formatRupiah(
+                    item.unit_price
+                )} = ${formatRupiah(item.subtotal)}`,
+                10,
+                y
+            );
+            y += 6;
+        });
+
+        y += 6;
+        doc.text("================================", 10, y);
+        doc.text(`Subtotal : ${formatRupiah(sale.subtotal)}`, 10, y + 6);
+        doc.text(`Pajak (10%) : ${formatRupiah(sale.tax)}`, 10, y + 12);
+        doc.text(`Total Harga : ${formatRupiah(sale.total_price)}`, 10, y + 18);
+        doc.text("================================", 10, y + 24);
+
+        doc.save(`Struk_Transaksi_${sale.id}.pdf`);
+    };
+
     return (
         <AppLayout>
             <div className="p-4">
@@ -50,11 +109,17 @@ export default function Detail({ sale }: DetailProps) {
                         </h2>
                         <p className="text-gray-600">
                             ID Transaksi: #{sale.id}
-                        </p>
+                        </p>    
                     </div>
-                    <Link href="/transaction">
-                        <Button>← Kembali</Button>
-                    </Link>
+                    <div className="flex gap-2">
+                        <Button onClick={exportToPDF}>
+                            <FileText className="mr-2" size={16} /> Download
+                            Struk
+                        </Button>
+                        <Link href="/transaction">
+                            <Button>← Kembali</Button>
+                        </Link>
+                    </div>
                 </div>
 
                 <Card className="p-6 mb-6 shadow-lg border border-gray-200 rounded-xl bg-white">

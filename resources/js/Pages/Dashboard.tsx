@@ -9,7 +9,13 @@ import {
     TableHeader,
     TableRow,
 } from "@/Components/ui/table";
-import { CheckCircle, TrendingUp, XCircle } from "lucide-react";
+import {
+    CheckCircle,
+    TrendingUp,
+    XCircle,
+    DollarSign,
+    ShoppingCart,
+} from "lucide-react";
 
 interface SalesSummary {
     total_sales: number;
@@ -27,19 +33,25 @@ interface Transaction {
     sales_date: string;
 }
 
+interface TopProduct {
+    name: string;
+    total_sold: number;
+}
+
 interface DashboardResponse {
     salesSummary?: SalesSummary;
+    totalRevenue?: number;
     latestTransactions?: Transaction[];
+    topProducts?: TopProduct[];
 }
 
 export default function Dashboard({
-    salesSummary = { total_sales: 0, total_paid: 0, total_unpaid: 0 }, // Nilai default
-    latestTransactions = [], // Nilai default
+    salesSummary = { total_sales: 0, total_paid: 0, total_unpaid: 0 },
+    totalRevenue = 0,
+    latestTransactions = [],
+    topProducts = [],
 }: DashboardResponse) {
     const user = usePage().props.auth.user;
-
-    console.log("salesSummary:", salesSummary);
-    console.log("latestTransactions:", latestTransactions);
 
     return (
         <AppLayout>
@@ -53,7 +65,7 @@ export default function Dashboard({
                 </div>
 
                 {/* Sales Summary */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <Card className="bg-blue-50 border-blue-300">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0">
                             <CardTitle>Total Sales</CardTitle>
@@ -86,6 +98,22 @@ export default function Dashboard({
                         <CardContent>
                             <p className="text-2xl font-bold">
                                 {salesSummary.total_unpaid}
+                            </p>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="bg-yellow-50 border-yellow-300">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0">
+                            <CardTitle>Total Revenue</CardTitle>
+                            <DollarSign className="h-6 w-6 text-yellow-600" />
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-2xl font-bold">
+                                {new Intl.NumberFormat("id-ID", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                    minimumFractionDigits: 0,
+                                }).format(totalRevenue)}
                             </p>
                         </CardContent>
                     </Card>
@@ -133,6 +161,29 @@ export default function Dashboard({
                                     >
                                         {transaction.payment_status}
                                     </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+
+                {/* Top Selling Products */}
+                <div className="bg-white shadow-md p-4 rounded-xl">
+                    <h2 className="text-xl font-semibold mb-2">
+                        Top Selling Products
+                    </h2>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Product Name</TableHead>
+                                <TableHead>Total Sold</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {topProducts.map((product, index) => (
+                                <TableRow key={index}>
+                                    <TableCell>{product.name}</TableCell>
+                                    <TableCell>{product.total_sold}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

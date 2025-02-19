@@ -9,7 +9,7 @@ export default function Hero() {
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-around">
                 <div className="md:w-1/2 mb-10 md:mb-0">
                     <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                        Manage Your Store with Ease
+                        Manage Your Store Easily
                     </h1>
                     <p className="text-xl text-muted-foreground mb-8">
                         Streamline your transactions and inventory management
